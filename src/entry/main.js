@@ -2,7 +2,9 @@ import { gsap, ScrollTrigger } from '../vendor.js';
 import Lenis from 'lenis';
 import { initPageTransitionState } from '../lib/pageTransitionState.js';
 import { initLenisProvider, getLenis, scrollToTop } from '../lib/lenisState.js';
-import { initPreloader } from '../components/Preloader.js';
+import { PreloaderProvider } from '../context/PreloaderProvider.js';
+import { Preloader } from '../features/animations/Preloader.js';
+
 import { initPreloaderScrollLock } from '../behaviors/PreloaderScrollLock.js';
 import { initSyncBodyTheme } from '../components/SyncBodyTheme.js'; 
 import { initPageEnterProvider } from '../components/PageEnterProvider.js';
@@ -12,13 +14,15 @@ import { initFooterClient } from '../components/FooterClient.js';
 import { footerProps } from '../data/footerData.js';
 import { initHeroSectionContent } from '../features/general/HeroSectionContent.js';
 import { initHeroScrollPush } from '../features/general/HeroScrollPush.js';
-import { initCardsSection,initAnimatedListSection,initFeaturedWorkSection,initIndexedGridSection,initAccordionSection } from '../index.js';
-
+import { initCardsSection, initAnimatedListSection, initFeaturedWorkSection, initIndexedGridSection, initAccordionSection } from '../index.js';
 import { initCustomCursor } from '../utils/customCursor.js';
 
 let destroyLenisProvider = null;
 let destroyPageEnterProvider = null;
 let destroyThemeSync = null; 
+let preloaderProviderInstance = null;
+let preloaderInstance = null; 
+
 let heroContentInstance = null; 
 let heroPushInstance = null;
 let cardsSectionInstance = null;
@@ -37,8 +41,13 @@ document.addEventListener('DOMContentLoaded', () => {
     initPageTransitionState(document.body);
   }
 
-  if (typeof initPreloader === "function") {
-    initPreloader(document.body, {});
+
+  preloaderProviderInstance = new PreloaderProvider(document.body, {});
+
+  preloaderInstance = new Preloader(document.body, {});
+
+  if (preloaderInstance && preloaderInstance.mount) {
+    preloaderInstance.mount();
   }
 
   if (typeof initPreloaderScrollLock === "function") {
@@ -48,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof initSyncBodyTheme === "function") {
     destroyThemeSync = initSyncBodyTheme();
   }
-
 
   const pageContent = document.createElement('div');
 
@@ -92,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     trustedBy: { title: 'Trusted By', items: [] },
   };
+  
   heroContentInstance = initHeroSectionContent(heroProps);
   heroGridLayoutEl.appendChild(heroContentInstance.element);
 
@@ -136,6 +145,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof destroyLenisProvider === 'function') destroyLenisProvider();
     if (typeof destroyPageEnterProvider === 'function') destroyPageEnterProvider();
     if (typeof destroyThemeSync === 'function') destroyThemeSync();
+
+if (preloaderProviderInstance && typeof preloaderProviderInstance.destroy === 'function') {
+  preloaderProviderInstance.destroy();
+}
+
+    if (preloaderInstance && typeof preloaderInstance.destroy === 'function') {
+      preloaderInstance.destroy();
+    }
 
     if (heroPushInstance && typeof heroPushInstance.destroy === 'function') heroPushInstance.destroy();
     if (heroContentInstance && typeof heroContentInstance.destroy === 'function') heroContentInstance.destroy();

@@ -8,3 +8,4 @@ export function usePreloader() {
     isInitialLoad: state.isInitialLoad,
   };
 }
+  

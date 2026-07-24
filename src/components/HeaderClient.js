@@ -1,4 +1,3 @@
-
 import { useHeaderScrollState } from '../hooks/useHeaderScrollState.js';
 import { initMenuButton } from './MenuButton.js';
 import { initMobileNavMenu } from './MobileNavMenu.js';
@@ -9,7 +8,8 @@ import { getLenis } from '../lib/lenisState.js';
 
 import { useModal } from '../hooks/useModal.js';
 import { usePageEnterContext } from '../hooks/usePageEnterContext.js';
-import { usePreloader } from '../hooks/usePreloader.js';
+
+import { subscribePreloader } from '../context/PreloaderProvider.js';
 import { useBreakpoint } from '../hooks/useBreakpoint.js';
 import { useAsciiDelay } from '../hooks/useAsciiDelay.js';
 import { usePageTransition } from '../hooks/usePageTransition.js';
@@ -37,12 +37,18 @@ export function initHeaderClient(parentElement, props = {}) {
   const scrollState = useHeaderScrollState(() => headerInnerRef.current, handleScrollStateChange);
   const { openModal } = useModal(); 
   const { prefersReducedMotion } = usePageEnterContext(); 
-  const { isInitialLoad } = usePreloader(); 
+
+  // NOTE: destructure မလုပ်တော့ပါ -- Header ကို PreloaderProvider mount ဖြစ်ခင်ကတည်းက
+  // init ခေါ်တတ်တဲ့ order issue ရှိတာမို့ destructure လုပ်ရင် stale snapshot (isInitialLoad: false)
+  // ကို အမြဲရနေမှာဖြစ်လို့ live object အနေနဲ့ ကိုင်ထားပါတယ်။ Provider mount ပြီးတဲ့အခါ
+  // notifyPreloaderSubscribers() က ဒီ object ရဲ့ getter value ကို update လုပ်ပေးပါလိမ့်မယ်.
+  const preloader = subscribePreloader();
+
   const isLg = useBreakpoint('lg'); 
   const asciiDelay = useAsciiDelay(); 
 
   function runInitialHideEffect() {
-    if (isInitialLoad && !prefersReducedMotion && headerRef.current) {
+    if (preloader.isInitialLoad && !prefersReducedMotion && headerRef.current) {
       headerRef.current.classList.add('header-hidden', 'no-transition');
       requestAnimationFrame(() => headerRef.current?.classList.remove('no-transition'));
     }
@@ -65,7 +71,7 @@ export function initHeaderClient(parentElement, props = {}) {
     if (headerRef.current) {
       setTimeout(() => {
         headerRef.current?.classList.remove('header-hidden');
-      }, (delaySeconds + (isInitialLoad ? asciiDelay : 0)) * 1000);
+      }, (delaySeconds + (preloader.isInitialLoad ? asciiDelay : 0)) * 1000);
     }
   }
   usePageEnter(revealHeaderAfterDelay, { priority: 0, skip: prefersReducedMotion }); 
@@ -189,7 +195,7 @@ export function initHeaderClient(parentElement, props = {}) {
     contentWrap.style.paddingLeft = `${paddingX}px`;
     contentWrap.style.paddingRight = `${paddingX}px`;
 
-headerLogoInstance.setMenuOpen(state.isMenuOpen);
+    headerLogoInstance.setMenuOpen(state.isMenuOpen);
  
     renderMenuButton();
 
