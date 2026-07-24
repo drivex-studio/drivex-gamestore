@@ -1,5 +1,4 @@
-import { usePreloader } from '../hooks/usePreloader.js';
-import { subscribePreloaderState } from './preloaderState.js';
+import { subscribePreloader } from '../context/PreloaderProvider.js';
 import { usePageTransition } from '../hooks/usePageTransition.js';
 
 const listeners = new Set();
@@ -11,6 +10,7 @@ let hasRun = false;
 let entranceTimeoutId = null;
 let completeTimeoutId = null;
 let mediaQuery = null;
+let preloaderPhase = 'loading';
 
 function notify() {
   listeners.forEach((fn) => fn(getPageEnterState()));
@@ -72,7 +72,6 @@ function evaluateEntranceTrigger() {
   }
 
   const { phase: pageTransitionPhase } = usePageTransition();
-  const { phase: preloaderPhase } = usePreloader();
   const preloaderSettled = preloaderPhase === 'revealing' || preloaderPhase === 'hidden';
 
   if (
@@ -109,7 +108,8 @@ export function subscribePageEnterState(fn) {
 
 export function initPageEnterState() {
   mountReducedMotionListener();
-  const unsubPreloader = subscribePreloaderState(() => {
+  const unsubPreloader = subscribePreloader((state) => {
+    preloaderPhase = state.phase;
     evaluateEntranceTrigger();
   });
   evaluateEntranceTrigger();

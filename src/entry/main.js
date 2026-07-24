@@ -2,10 +2,11 @@ import { gsap, ScrollTrigger } from '../vendor.js';
 import Lenis from 'lenis';
 import { initPageTransitionState } from '../lib/pageTransitionState.js';
 import { initLenisProvider, getLenis, scrollToTop } from '../lib/lenisState.js';
+
 import { PreloaderProvider } from '../context/PreloaderProvider.js';
 import { Preloader } from '../features/animations/Preloader.js';
+import { PreloaderScrollLock } from '../context/PreloaderScrollLock.js';
 
-import { initPreloaderScrollLock } from '../behaviors/PreloaderScrollLock.js';
 import { initSyncBodyTheme } from '../components/SyncBodyTheme.js'; 
 import { initPageEnterProvider } from '../components/PageEnterProvider.js';
 import { initHeaderClient } from '../components/HeaderClient.js';
@@ -20,8 +21,10 @@ import { initCustomCursor } from '../utils/customCursor.js';
 let destroyLenisProvider = null;
 let destroyPageEnterProvider = null;
 let destroyThemeSync = null; 
+
 let preloaderProviderInstance = null;
 let preloaderInstance = null; 
+let preloaderScrollLockInstance =  null; 
 
 let heroContentInstance = null; 
 let heroPushInstance = null;
@@ -43,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   preloaderProviderInstance = new PreloaderProvider(document.body, {});
-
+  preloaderScrollLockInstance = new PreloaderScrollLock(document.body, {});
   preloaderInstance = new Preloader(document.body, {});
 
   if (preloaderInstance && preloaderInstance.mount) {
@@ -148,6 +151,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 if (preloaderProviderInstance && typeof preloaderProviderInstance.destroy === 'function') {
   preloaderProviderInstance.destroy();
+}
+if (preloaderScrollLockInstance && typeof preloaderScrollLockInstance === 'function') {
+  preloaderScrollLockInstance();
 }
 
     if (preloaderInstance && typeof preloaderInstance.destroy === 'function') {

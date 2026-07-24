@@ -1,0 +1,43 @@
+@layer components {
+.Preloader {
+  position: fixed;
+  inset: calc(var(--spacing) * 0);
+  z-index: 10000; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-background);
+}
+
+.Preloader.is-complete {
+  pointer-events: none;
+}
+
+.Preloader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--spacing) * 4);
+}
+
+.Preloader-squares {
+  position: relative;
+  overflow-x: clip;
+  overflow-y: visible;
+  width: 70px;
+  height: calc(var(--spacing) * 16);
+}
+
+.Preloader-square {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(var(--spacing) * 16);
+  height: calc(var(--spacing) * 16);
+  background-color: var(--color-foreground);
+}
+
+.Preloader-text {
+  overflow: hidden;
+}
+}
