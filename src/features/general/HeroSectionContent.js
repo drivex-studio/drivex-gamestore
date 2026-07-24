@@ -1,9 +1,9 @@
 
 import { gsap } from '../../vendor.js';
 
-import { initAnimatedHeadline } from '../AnimatedHeadline.js';
-import { initAnimatedSubtext } from '../AnimatedSubtext.js';
-import { initButtonGroup } from '../ButtonGroup.js';
+import { initAnimatedHeadline } from '../utilities/AnimatedHeadline.js';
+import { initAnimatedSubtext } from '../utilities/AnimatedSubtext.js';
+import { initButtonGroup } from '../utilities/ButtonGroup.js';
 import { useAsciiDelay } from '../../hooks/useAsciiDelay.js'; 
 import { usePageEnter } from '../../hooks/usePageEnter.js'; 
 import { usePageEnterContext } from '../../hooks/usePageEnterContext.js'; 

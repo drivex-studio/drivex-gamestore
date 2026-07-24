@@ -1,4 +1,4 @@
-import { initScrollAnimatedHeadline } from '../ScrollAnimatedHeadline.js';
+import { initScrollAnimatedHeadline } from '../utilities/ScrollAnimatedHeadline.js';
 import { initScrambleGroup } from '../../utils/ScrambleGroup.js'; 
 import { initScrambleText } from '../../utils/ScrambleText.js'; 
 import gsap from 'gsap';

@@ -1,4 +1,4 @@
-import { initScrollAnimatedHeadline } from './features/ScrollAnimatedHeadline.js';
+import { initScrollAnimatedHeadline } from './features/utilities/ScrollAnimatedHeadline.js';
 import { initCardsSectionClient } from './features/general/CardsSectionClient.js';
 import { initAnimatedListSectionClient } from './features/general/AnimatedListSectionClient.js';
 import { initFeaturedWorkSectionClient } from './features/general/FeaturedWorkSectionClient.js';

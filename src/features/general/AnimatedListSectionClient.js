@@ -1,4 +1,4 @@
-import { initScrollAnimatedHeadline } from '../ScrollAnimatedHeadline.js';
+import { initScrollAnimatedHeadline } from '../utilities/ScrollAnimatedHeadline.js';
 import { initSanityMedia } from '../../media/SanityMedia.js';
 import { SanityImage } from '../../media/SanityImage.js';
 import { getLenis } from '../../lib/lenisState.js';

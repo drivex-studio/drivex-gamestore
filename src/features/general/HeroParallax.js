@@ -1,8 +1,8 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { initAnimatedHeadline } from '../AnimatedHeadline.js';
-import { initAnimatedSubtext } from '../AnimatedSubtext.js';
-import { initButtonGroup } from '../ButtonGroup.js';
+import { initAnimatedHeadline } from '../utilities/AnimatedHeadline.js';
+import { initAnimatedSubtext } from '../utilities/AnimatedSubtext.js';
+import { initButtonGroup } from '../utilities/ButtonGroup.js';
 import { createImageElement } from '../../media/shared/imageElement.js'; 
 import { usePageEnter } from '../../hooks/usePageEnter.js'; 
 import { usePageEnterContext } from '../../hooks/usePageEnterContext.js'; 

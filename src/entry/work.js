@@ -10,7 +10,7 @@ import { initPageEnterProvider } from '../components/PageEnterProvider.js';
 import { initHeaderClient } from '../components/HeaderClient.js';
 import { navItems, flyout, headerCta, spotsRemaining } from '../data/navData.js';
 
-import { initHeroTextOnly } from '../features/HeroTextOnly.js';
+import { initHeroTextOnly } from '../features/utilities/HeroTextOnly.js';
 import { heroData } from '../data/heroTextOnlyData.js';
 
 import { initFooterClient } from '../components/FooterClient.js';

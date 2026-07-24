@@ -6,9 +6,9 @@ import { useDualLayerScramble } from '../../utils/FlipIndicator.js';
 import { useIdleGSAP } from '../../hooks/useIdleGSAP.js';
 import { cx } from '../../utils/cx.js';
 
-import { initScrollAnimatedHeadline } from '../ScrollAnimatedHeadline.js';
+import { initScrollAnimatedHeadline } from '../utilities/ScrollAnimatedHeadline.js';
 import { initFlipIndicator } from '../../utils/FlipIndicator.js';
-import { initSanityButton } from '../SanityButton.js';
+import { initSanityButton } from '../utilities/SanityButton.js';
 
 import { initSanityImage, initSanityMedia } from '../shared.js';
 

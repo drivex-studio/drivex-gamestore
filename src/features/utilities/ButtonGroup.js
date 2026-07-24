@@ -1,6 +1,6 @@
 
 import { initSanityButton } from './SanityButton.js';
-import { cx } from '../utils/cx.js'; 
+import { cx } from '../../utils/cx.js'; 
 
 const LAYOUT_CLASS_MAP = {
   horizontal: 'flex-row flex-wrap items-center',
