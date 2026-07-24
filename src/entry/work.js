@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const mainContainer = document.createElement('main');
-  mainContainer.id = 'main-content';
+  mainContainer.className = 'relative z-[1]';
   document.body.appendChild(mainContainer);
 
   const heroSectionWrapper = document.createElement('section');

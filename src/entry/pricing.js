@@ -54,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const mainContainer = document.createElement('main');
-  mainContainer.id = 'main-content';
   mainContainer.className = 'relative z-[1]';
   pageContent.appendChild(mainContainer);
 
