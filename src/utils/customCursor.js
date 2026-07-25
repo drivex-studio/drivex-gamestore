@@ -1,4 +1,4 @@
-
+//src/utils/customCursor.js
 import { gsap } from '../vendor.js';
 import { 
   getPageTransitionState, 

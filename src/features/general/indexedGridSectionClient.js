@@ -36,11 +36,14 @@ export function initIndexedGridSectionClient(parentElement, props = {}) {
     mainHeaderCols.className = `${isTwoColumn ? 'lg:grid-start-4 lg:grid-span-6 ' : ''}grid-span-12 flex flex-col gap-16 lg:flex-row lg:items-end lg:justify-between`.trim();
 
     if (headline && headline.text) {
-      const headlineInst = initScrollAnimatedHeadline(mainHeaderCols, {
+      const headlineInst = initScrollAnimatedHeadline({
         headline: { text: headline.text, level: headline.level ?? 'h2' },
         className: 'lg:max-w-1/2'
       });
-      if (headlineInst) childInstances.push(headlineInst);
+      if (headlineInst) {
+        mainHeaderCols.appendChild(headlineInst.element);
+        childInstances.push(headlineInst);
+      }
     }
 
     if (text) {

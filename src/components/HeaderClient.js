@@ -2,7 +2,7 @@ import { useHeaderScrollState } from '../hooks/useHeaderScrollState.js';
 import { initMenuButton } from './MenuButton.js';
 import { initMobileNavMenu } from './MobileNavMenu.js';
 import { initHeaderLogo as HeaderLogo } from './HeaderLogo.js';
-import { initAnimatedButton } from './ui/AnimatedButton.js';
+import { initAnimatedButton } from '../features/utilities/AnimatedButton.js';
 import { cx } from '../utils/cx.js';
 import { getLenis } from '../lib/lenisState.js';
 

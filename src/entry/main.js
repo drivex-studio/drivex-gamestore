@@ -15,7 +15,7 @@ import { initFooterClient } from '../components/FooterClient.js';
 import { footerProps } from '../data/footerData.js';
 import { initHeroSectionContent } from '../features/general/HeroSectionContent.js';
 import { initHeroScrollPush } from '../features/general/HeroScrollPush.js';
-import { initCardsSection, initAnimatedListSection, initFeaturedWorkSection, initIndexedGridSection, initAccordionSection } from '../index.js';
+import { initCardsSection, initAnimatedListSection, initFeaturedWorkSection, initIndexedGridSection, initAccordionSection, initCtaSection } from '../index.js';
 import { initCustomCursor } from '../utils/customCursor.js';
 
 let destroyLenisProvider = null;
@@ -33,6 +33,7 @@ let animatedListInstance = null;
 let featuredWorkInstance = null;
 let IndexedGridInstance = null;
 let accordionInstance = null;   
+let ctaSectionInstance = null;
 let customCursorInstance = null;
 let footerInstance = null;   
 
@@ -120,6 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
   featuredWorkInstance = initFeaturedWorkSection(mainContainer);
   IndexedGridInstance = initIndexedGridSection(mainContainer);
   accordionInstance = initAccordionSection(mainContainer);   
+  ctaSectionInstance = initCtaSection(mainContainer);
   footerInstance = initFooterClient(pageContent, footerProps);
 
   customCursorInstance = initCustomCursor(pageContent);
@@ -142,6 +144,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   if (accordionInstance && accordionInstance.mount) { 
     accordionInstance.mount();
+  }
+  if (ctaSectionInstance && ctaSectionInstance.mount) {
+    ctaSectionInstance.mount();
   }
   
   window.addEventListener('unload', () => {
@@ -179,6 +184,9 @@ if (preloaderScrollLockInstance && typeof preloaderScrollLockInstance === 'funct
     }
     if (accordionInstance && typeof accordionInstance.destroy === 'function') {
       accordionInstance.destroy();
+    }
+    if (ctaSectionInstance && typeof ctaSectionInstance.destroy === 'function') {
+      ctaSectionInstance.destroy();
     }
 
     if (customCursorInstance && typeof customCursorInstance.destroy === 'function') {

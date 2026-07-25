@@ -1,3 +1,5 @@
+import { initPageBuilderSection } from './features/utilities/PageBuilderSection.js';
+
 import { initScrollAnimatedHeadline } from './features/utilities/ScrollAnimatedHeadline.js';
 import { initCardsSectionClient } from './features/general/CardsSectionClient.js';
 import { initAnimatedListSectionClient } from './features/general/AnimatedListSectionClient.js';
@@ -10,6 +12,11 @@ import { animatedListSectionData } from './data/animatedListSectionData.js';
 import { featuredWorkSectionData } from './data/featuredWorkSectionData.js';
 import { indexedGridSectionData } from './data/indexedGridSectionData.js';
 import { accordionData, accordionSectionData } from './data/accordionData.js';
+
+import { SanityImage } from './media/SanityImage.js';
+import { initAnimatedProse } from './components/AnimatedProse.js';
+import { initButtonGroup } from './features/utilities/ButtonGroup.js';
+import { ctaSectionData } from './data/ctaSectionData.js';
 
 export function initCardsSection(mainContainer) {
   const sectionEl = document.createElement('section');
@@ -118,7 +125,7 @@ export function initIndexedGridSection(mainContainer) {
   sectionEl.className = 'bg-background pt-64 lg:pt-128 pb-64 lg:pb-128';
 
   const IndexedGridInstance = initIndexedGridSectionClient(sectionEl, {
-    ...indexedGridSectionData,  
+    ...indexedGridSectionData,
   });
 
   if (mainContainer) {
@@ -161,7 +168,7 @@ export function initAccordionSection(mainContainer) {
   const headlineInstance = initScrollAnimatedHeadline({
     headline: accordionSectionData.headline,
   });
-  headingSpanEl.appendChild(headlineInstance.element); 
+  headingSpanEl.appendChild(headlineInstance.element);
 
   const accordionSpanEl = document.createElement('div');
   accordionSpanEl.className = 'grid-span-12 lg:grid-span-6 lg:grid-start-6 mt-48 lg:mt-0';
@@ -176,7 +183,7 @@ export function initAccordionSection(mainContainer) {
   if (mainContainer) {
     mainContainer.appendChild(sectionEl);
   }
-  
+
   function mount() {
     headlineInstance.mount();
   }
@@ -194,3 +201,85 @@ export function initAccordionSection(mainContainer) {
   return { element: sectionEl, mount, destroy };
 }
 
+export function initCtaSection(mainContainer) {
+  const data = ctaSectionData;
+
+  const section = initPageBuilderSection({
+    name: data.sectionType,
+    theme: data.theme,
+    padding: 'pt-64 lg:pt-128 pb-64 lg:pb-128',
+    gridClassName: 'gap-y-48',
+    mainContainer,
+  });
+
+  // ---- left column: headline + image ----
+  const leftHeadline = section.registerInstance(
+    initScrollAnimatedHeadline({ headline: data.content.leftColumn.headline })
+  );
+
+  const imageWrapEl = document.createElement('div');
+  imageWrapEl.className = 'max-lg:!max-w-full w-full h-full';
+  const imageInnerEl = document.createElement('div');
+  imageInnerEl.className = 'overflow-hidden h-full';
+  imageInnerEl.style.aspectRatio = '16 / 9';
+
+  const imageInstance = SanityImage(imageInnerEl, {
+    image: data.content.leftColumn.image,
+    className: 'size-full',
+  });
+  if (imageInstance) section.registerInstance(imageInstance);
+
+  imageWrapEl.appendChild(imageInnerEl);
+
+
+  const leftColEl = document.createElement('div');
+  leftColEl.className = 'flex h-full flex-col justify-start items-start gap-80';
+  leftColEl.appendChild(leftHeadline.element);
+  leftColEl.appendChild(imageWrapEl);
+
+  section.addSpan('grid-span-12 lg:grid-span-6 lg:grid-start-1', leftColEl);
+
+  // ---- right column: headline + contact info + buttons + note ----
+  const rightColumn = data.content.rightColumn;
+
+  const rightHeadline = section.registerInstance(
+    initScrollAnimatedHeadline({ headline: rightColumn.headline })
+  );
+
+  const proseWrapEl = document.createElement('div');
+  proseWrapEl.className = 'prose';
+  const linesWrapEl = document.createElement('div');
+  linesWrapEl.className = 'flex flex-col gap-16';
+  proseWrapEl.appendChild(linesWrapEl);
+
+  const contactLines = [rightColumn.contactInfo.email, rightColumn.contactInfo.subtext];
+  contactLines.forEach((line) => {
+    const paragraphEl = document.createElement('div');
+    paragraphEl.className = 'text-body empty:hidden';
+    paragraphEl.dataset.paragraph = 'true';
+    section.registerInstance(initAnimatedProse(paragraphEl, { children: line }));
+    linesWrapEl.appendChild(paragraphEl);
+  });
+
+  const ctaRowEl = document.createElement('div');
+  ctaRowEl.className = 'flex items-start flex-col gap-16';
+  const buttonGroupEl = initButtonGroup({
+    buttonGroup: { layout: 'vertical', gap: 16, buttons: rightColumn.ctaButtons },
+  });
+  if (buttonGroupEl) ctaRowEl.appendChild(buttonGroupEl);
+
+  const noteEl = document.createElement('p');
+  noteEl.className = '!text-foreground';
+  noteEl.textContent = rightColumn.note;
+
+  const rightColEl = document.createElement('div');
+  rightColEl.className = 'flex h-full flex-col justify-between items-start gap-16';
+  rightColEl.appendChild(rightHeadline.element);
+  rightColEl.appendChild(proseWrapEl);
+  rightColEl.appendChild(ctaRowEl);
+  rightColEl.appendChild(noteEl);
+
+  section.addSpan('grid-span-12 lg:grid-span-4 lg:grid-start-8', rightColEl);
+
+  return section;
+}

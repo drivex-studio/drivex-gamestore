@@ -1,0 +1,266 @@
+@layer components {
+
+  .AnimatedButton-Root {
+    display: inline-flex;
+    min-width: calc(var(--spacing)*0);
+    flex-shrink: 0;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+  }
+
+  .AnimatedButton-Typography {
+    --tw-font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-medium);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+  }
+
+  .AnimatedButton-FocusRing {
+    --tw-outline-style: none;
+    outline-style: none;
+  }
+
+  .AnimatedButton-FocusRing:focus-visible {
+    --tw-ring-shadow: var(--tw-ring-inset, )0 0 0 calc(2px + var(--tw-ring-offset-width))var(--tw-ring-color, currentcolor);
+    --tw-ring-color: var(--color-brand);
+    --tw-ring-offset-width: 2px;
+    --tw-ring-offset-shadow: var(--tw-ring-inset, )0 0 0 var(--tw-ring-offset-width)var(--tw-ring-offset-color);
+    --tw-ring-offset-color: var(--color-background);
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+
+  @supports (color:color-mix(in lab, red, red)) {
+    .AnimatedButton-FocusRing:focus-visible {
+      --tw-ring-color: color-mix(in oklab, var(--color-brand)50%, transparent);
+    }
+  }
+
+  .AnimatedButton-Disabled:disabled {
+    pointer-events: none;
+    opacity: .5;
+  }
+
+  /* buttonVariants: size (text scale, xs/sm share a step; default/lg step up at lg:) */
+  .AnimatedButton-Root--xs,
+  .AnimatedButton-Root--sm {
+    font-size: var(--text-body-sm);
+    line-height: var(--tw-leading, var(--text-body-sm--line-height));
+    letter-spacing: var(--tw-tracking, var(--text-body-sm--letter-spacing));
+    font-weight: var(--tw-font-weight, var(--text-body-sm--font-weight));
+  }
+
+  .AnimatedButton-Root--default {
+    font-size: var(--text-body-sm);
+    line-height: var(--tw-leading, var(--text-body-sm--line-height));
+    letter-spacing: var(--tw-tracking, var(--text-body-sm--letter-spacing));
+    font-weight: var(--tw-font-weight, var(--text-body-sm--font-weight));
+  }
+
+  .AnimatedButton-Root--lg {
+    font-size: var(--text-body);
+    line-height: var(--tw-leading, var(--text-body--line-height));
+    letter-spacing: var(--tw-tracking, var(--text-body--letter-spacing));
+    font-weight: var(--tw-font-weight, var(--text-body--font-weight));
+  }
+
+  @media (min-width:64rem) {
+    .AnimatedButton-Root--default {
+      font-size: var(--text-body);
+      line-height: var(--tw-leading, var(--text-body--line-height));
+      letter-spacing: var(--tw-tracking, var(--text-body--letter-spacing));
+      font-weight: var(--tw-font-weight, var(--text-body--font-weight));
+    }
+
+    .AnimatedButton-Root--lg {
+      font-size: var(--text-body-lg);
+      line-height: var(--tw-leading, var(--text-body-lg--line-height));
+      letter-spacing: var(--tw-tracking, var(--text-body-lg--letter-spacing));
+      font-weight: var(--tw-font-weight, var(--text-body-lg--font-weight));
+    }
+  }
+
+  .AnimatedButton-CrossWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .AnimatedButton-CrossWrap--xs {
+    width: calc(var(--spacing)*32);
+    height: calc(var(--spacing)*32);
+  }
+
+  .AnimatedButton-CrossWrap--sm {
+    width: calc(var(--spacing)*32);
+    height: calc(var(--spacing)*32);
+  }
+
+  .AnimatedButton-CrossWrap--default {
+    width: calc(var(--spacing)*40);
+    height: calc(var(--spacing)*40);
+  }
+
+  .AnimatedButton-CrossWrap--lg {
+    width: calc(var(--spacing)*48);
+    height: calc(var(--spacing)*48);
+  }
+
+  @media (min-width:64rem) {
+    .AnimatedButton-CrossWrap--sm {
+      width: calc(var(--spacing)*40);
+      height: calc(var(--spacing)*40);
+    }
+
+    .AnimatedButton-CrossWrap--default {
+      width: calc(var(--spacing)*48);
+      height: calc(var(--spacing)*48);
+    }
+
+    .AnimatedButton-CrossWrap--lg {
+      width: calc(var(--spacing)*56);
+      height: calc(var(--spacing)*56);
+    }
+  }
+
+  /* crossWrapVariants: position (rest/initial state -- hover state overrides these below) */
+  .AnimatedButton-CrossWrap--left {
+    transform-origin: 0;
+    rotate: -45deg;
+    --tw-scale-x: 0%;
+    --tw-scale-y: 0%;
+    --tw-scale-z: 0%;
+    scale: var(--tw-scale-x)var(--tw-scale-y);
+  }
+
+  .AnimatedButton-CrossWrap--right {
+    position: absolute;
+    right: calc(var(--spacing)*0);
+    z-index: 10;
+    transform-origin: 100%;
+    rotate: none;
+    --tw-scale-x: 100%;
+    --tw-scale-y: 100%;
+    --tw-scale-z: 100%;
+    scale: var(--tw-scale-x)var(--tw-scale-y);
+  }
+
+  /* crossWrapVariants + labelWrapVariants: theme (shared bg/text pairing) */
+  .AnimatedButton-CrossWrap--light,
+  .AnimatedButton-CrossWrap--dark,
+  .AnimatedButton-LabelWrap--light,
+  .AnimatedButton-LabelWrap--dark {
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+  }
+
+  .AnimatedButton-CrossWrap--brand,
+  .AnimatedButton-LabelWrap--brand {
+    background-color: var(--color-brand);
+    color: var(--color-black);
+  }
+
+  .AnimatedButton-TransformTransition {
+    transition-property: transform, translate, scale, rotate;
+    --tw-duration: .7s;
+    transition-duration: .7s;
+    transition-timing-function: var(--ease-power4-in-out);
+  }
+
+  .AnimatedButton-LabelWrap {
+    display: flex;
+    width: 100%;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* labelWrapVariants: size (height + inverse translate-x to sit behind CrossWrap--left + padding) */
+  .AnimatedButton-LabelWrap--xs {
+    height: calc(var(--spacing)*32);
+    --tw-translate-x: calc(calc(32px + 6px)*-1);
+    translate: var(--tw-translate-x)var(--tw-translate-y);
+    padding-inline: calc(var(--spacing)*8);
+  }
+
+  .AnimatedButton-LabelWrap--sm {
+    height: calc(var(--spacing)*32);
+    --tw-translate-x: calc(calc(32px + 6px)*-1);
+    translate: var(--tw-translate-x)var(--tw-translate-y);
+    padding-inline: calc(var(--spacing)*8);
+  }
+
+  .AnimatedButton-LabelWrap--default {
+    height: calc(var(--spacing)*40);
+    --tw-translate-x: calc(calc(40px + 6px)*-1);
+    translate: var(--tw-translate-x)var(--tw-translate-y);
+    padding-inline: calc(var(--spacing)*12);
+  }
+
+  .AnimatedButton-LabelWrap--lg {
+    height: calc(var(--spacing)*48);
+    --tw-translate-x: calc(calc(48px + 6px)*-1);
+    translate: var(--tw-translate-x)var(--tw-translate-y);
+    padding-inline: calc(var(--spacing)*16);
+  }
+
+  @media (min-width:64rem) {
+    .AnimatedButton-LabelWrap--sm {
+      height: calc(var(--spacing)*40);
+      --tw-translate-x: calc(calc(40px + 6px)*-1);
+      translate: var(--tw-translate-x)var(--tw-translate-y);
+      padding-inline: calc(var(--spacing)*12);
+    }
+
+    .AnimatedButton-LabelWrap--default {
+      height: calc(var(--spacing)*48);
+      --tw-translate-x: calc(calc(48px + 6px)*-1);
+      translate: var(--tw-translate-x)var(--tw-translate-y);
+      padding-inline: calc(var(--spacing)*16);
+    }
+
+    .AnimatedButton-LabelWrap--lg {
+      height: calc(var(--spacing)*56);
+      --tw-translate-x: calc(calc(56px + 6px)*-1);
+      translate: var(--tw-translate-x)var(--tw-translate-y);
+      padding-inline: calc(var(--spacing)*24);
+    }
+  }
+
+  .AnimatedButton-CrossIcon {
+    width: .75em;
+    height: .75em;
+  }
+
+  .AnimatedButton-Content {
+    position: relative;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: calc(var(--spacing)*6);
+  }
+
+  @media (hover:hover) {
+    .AnimatedButton-Root:hover .AnimatedButton-LeftCrossHover {
+      rotate: none;
+      --tw-scale-x: 100%;
+      --tw-scale-y: 100%;
+      --tw-scale-z: 100%;
+      scale: var(--tw-scale-x)var(--tw-scale-y);
+    }
+
+    .AnimatedButton-Root:hover .AnimatedButton-LabelHover {
+      --tw-translate-x: calc(var(--spacing)*0);
+      translate: var(--tw-translate-x)var(--tw-translate-y);
+    }
+
+    .AnimatedButton-Root:hover .AnimatedButton-RightCrossHover {
+      rotate: -45deg;
+      --tw-scale-x: 0%;
+      --tw-scale-y: 0%;
+      --tw-scale-z: 0%;
+      scale: var(--tw-scale-x)var(--tw-scale-y);
+    }
+  }
+}
