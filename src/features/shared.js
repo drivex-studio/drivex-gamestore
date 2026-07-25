@@ -3,7 +3,7 @@ export { initSanityMedia } from '../media/SanityMedia.js';
 export * from '../config/asciiConfig.js';
 
 export { cx } from '../utils/cx.js'; 
-export { useIdleGSAP } from '../hooks/useIdleGSAP.js';
+export { subscribeIdleGSAP } from '../context/PageTransitionProvider.js';
 export { SanityLink } from '../media/SanityLink.js';
 export { AnimatedLink } from '../components/ui/AnimatedLink.js';
 export { initAnimatedButton } from '../components/ui/AnimatedButton.js';

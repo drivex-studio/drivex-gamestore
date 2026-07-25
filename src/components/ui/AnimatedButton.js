@@ -16,7 +16,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: { primary: [] },
-      size: { xs: 'text-body-sm', sm: 'text-body-sm', default: 'text-body-sm lg:text-body', lg: 'text-body lg:text-body-lg' },
+      size: { xs: 'text-body-sm', sm: 'text-body-sm', default: 'text-body-sm lg:text-body', lg: 'text-body lg:text-body-lg', cta: 'text-body' },
     },
     defaultVariants: { variant: 'primary', size: 'default' },
   }
@@ -26,7 +26,7 @@ const crossWrapVariants = cva(
   ['flex items-center justify-center', 'transition-transform duration-700 [transition-timing-function:var(--ease-power4-in-out)]'],
   {
     variants: {
-      size: { xs: 'size-32', sm: 'size-32 lg:size-40', default: 'size-40 lg:size-48', lg: 'size-48 lg:size-56' },
+      size: { xs: 'size-32', sm: 'size-32 lg:size-40', default: 'size-40 lg:size-48', lg: 'size-48 lg:size-56', cta: 'size-48' },
       position: { left: 'origin-left -rotate-45 scale-0', right: 'absolute right-0 z-10 origin-right rotate-0 scale-100' },
       theme: { light: 'bg-foreground text-background', dark: 'bg-foreground text-background', brand: 'bg-brand text-black' },
     },
@@ -43,6 +43,7 @@ const labelWrapVariants = cva(
         sm: 'h-32 -translate-x-[calc(32px+6px)] px-8 lg:h-40 lg:-translate-x-[calc(40px+6px)] lg:px-12',
         default: 'h-40 -translate-x-[calc(40px+6px)] px-12 lg:h-48 lg:-translate-x-[calc(48px+6px)] lg:px-16',
         lg: 'h-48 -translate-x-[calc(48px+6px)] px-16 lg:h-56 lg:-translate-x-[calc(56px+6px)] lg:px-24',
+        cta: 'h-48 -translate-x-[calc(48px+6px)] px-16',
       },
       theme: { light: 'bg-foreground text-background', dark: 'bg-foreground text-background', brand: 'bg-brand text-black' },
     },

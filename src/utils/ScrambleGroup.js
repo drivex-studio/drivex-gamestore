@@ -1,6 +1,6 @@
 import { gsap } from '../vendor.js';
 import { ScrambleGroupContext } from './ScrambleGroupContext.js';
-import { useIdleGSAP } from '../hooks/useIdleGSAP.js';
+import { subscribeIdleGSAP } from '../context/PageTransitionProvider.js';
 
 export function initScrambleGroup(parentElement, props) {
   const { children, stagger = 0.1, start = 'top 80%', markers = false, manual = false, className } = props;
@@ -67,7 +67,7 @@ export function initScrambleGroup(parentElement, props) {
   let destroyed = false;
   const rafId = requestAnimationFrame(() => {
     if (destroyed) return;
-    idleGsapCleanup = useIdleGSAP(setupScrollTrigger, {
+    idleGsapCleanup = subscribeIdleGSAP(setupScrollTrigger, {
       dependencies: [manual, start, markers, triggerAll],
     });
   });

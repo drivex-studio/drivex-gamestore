@@ -6,14 +6,18 @@ import { initAnimatedButton as AnimatedButton } from '../../components/ui/Animat
 import { initInput } from '../../components/ui/Input.js';
 import { initFormHoneypot as FormHoneypot } from '../../components/ui/FormHoneypot.js';
 import { useSpamPrevention } from '../../hooks/useSpamPrevention.js';
+import { initSanityButton } from '../utilities/SanityButton.js';
+import { initPageBuilderSection } from '../utilities/PageBuilderSection.js';
 import { cx } from '../../utils/cx.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const CONTACT_ENDPOINT = '/api/submit-contact-form';
+
 const FIELD_CLASS =
   'w-full border-0 border-b border-foreground/20 bg-transparent px-0 py-12 text-body text-foreground placeholder:text-foreground/40 focus:border-foreground focus:outline-none transition-colors';
 
-function buildVisual({ image }, instances) {
+function buildVisual(image, instances) {
   const wrap = document.createElement('div');
   wrap.className = 'grid-span-12 lg:grid-span-4 order-3 h-full lg:order-none';
 
@@ -30,25 +34,41 @@ function buildVisual({ image }, instances) {
   return wrap;
 }
 
-function buildContactLine({ label, href, text }) {
+const LINE_LINK_CLASS =
+  'group relative no-underline outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+
+function buildLineUnderline() {
+  const wrap = document.createElement('span');
+  wrap.className = 'pointer-events-none absolute inset-x-0 -bottom-1';
+  wrap.setAttribute('aria-hidden', 'true');
+
+  const top = document.createElement('span');
+  top.className =
+    'absolute inset-x-0 top-0 h-px origin-left scale-x-100 bg-current transition-transform delay-300 duration-700 [transition-timing-function:cubic-bezier(0.625,0.05,0,1)] group-hover:origin-right group-hover:scale-x-0 group-hover:delay-0 group-focus-visible:origin-right group-focus-visible:scale-x-0 group-focus-visible:delay-0';
+
+  const bottom = document.createElement('span');
+  bottom.className =
+    'absolute inset-x-0 top-0 h-px origin-right scale-x-0 bg-current transition-transform delay-0 duration-700 [transition-timing-function:cubic-bezier(0.625,0.05,0,1)] group-hover:origin-left group-hover:scale-x-100 group-hover:delay-300 group-focus-visible:origin-left group-focus-visible:scale-x-100 group-focus-visible:delay-300';
+
+  wrap.appendChild(top);
+  wrap.appendChild(bottom);
+  return wrap;
+}
+
+// entry looks like { label: "Email", link: { href, text, openInNewTab, type, ... } }
+function buildContactLine({ label, link }) {
   const p = document.createElement('p');
   if (label) p.appendChild(document.createTextNode(`${label}: `));
-  const a = document.createElement('a');
-  a.href = href;
-  a.className = 'underline decoration-foreground/30 underline-offset-4 hover:decoration-foreground transition-colors';
-  a.textContent = text;
+  const a = SanityLink({ link, children: link.text, className: LINE_LINK_CLASS });
+  a.appendChild(buildLineUnderline());
   p.appendChild(a);
   return p;
 }
 
-function buildSocialLine(social) {
+function buildSocialLine({ label, link }) {
   const p = document.createElement('p');
-  const a = document.createElement('a');
-  a.href = social.href;
-  a.target = '_blank';
-  a.rel = 'noopener noreferrer';
-  a.className = 'underline decoration-foreground/30 underline-offset-4 hover:decoration-foreground transition-colors';
-  a.textContent = social.text;
+  const a = SanityLink({ link, children: label, className: LINE_LINK_CLASS });
+  a.appendChild(buildLineUnderline());
   p.appendChild(a);
   return p;
 }
@@ -59,9 +79,8 @@ function buildInfoColumn(data, instances) {
 
   const headingWrap = document.createElement('div');
   const headline = initAnimatedHeadline({
-    children: data.headline,
+    children: data.title,
     as: 'h2',
-    trigger: 'scroll',
   });
   headingWrap.appendChild(headline.element);
   instances.push(headline);
@@ -74,7 +93,9 @@ function buildInfoColumn(data, instances) {
   contentWrap.className = 'flex flex-col gap-16';
 
   const lineEls = [];
-  data.contactLines.forEach((line) => {
+  // data.contact = { email: {label, link}, Julian: {label, link}, Adrian: {label, link}, note }
+  const { note, ...contactEntries } = data.contact;
+  Object.values(contactEntries).forEach((line) => {
     const el = buildContactLine(line);
     lineEls.push(el);
     contentWrap.appendChild(el);
@@ -82,14 +103,14 @@ function buildInfoColumn(data, instances) {
 
   contentWrap.appendChild(document.createElement('br'));
 
-  data.socials.forEach((social) => {
+  data.socialLinks.forEach((social) => {
     const el = buildSocialLine(social);
     lineEls.push(el);
     contentWrap.appendChild(el);
   });
 
   const availability = document.createElement('p');
-  availability.textContent = data.availabilityNote;
+  availability.textContent = note;
   lineEls.push(availability);
   contentWrap.appendChild(availability);
 
@@ -102,6 +123,7 @@ function buildInfoColumn(data, instances) {
   let scrollTriggerInstance = null;
   function mount() {
     headline.mount();
+    headline.reveal();
     if (lineEls.length === 0) return;
     gsap.set(lineEls, { opacity: 0, y: 12 });
     scrollTriggerInstance = ScrollTrigger.create({
@@ -216,11 +238,12 @@ function buildForm(data, instances) {
 
   const ctaHeading = document.createElement('h3');
   ctaHeading.className = 'mb-24 text-h4';
-  ctaHeading.textContent = data.callToAction.heading;
+  ctaHeading.textContent = data.booking.heading;
   ctaBlock.appendChild(ctaHeading);
 
+
   const ctaButtonEl = initSanityButton({
-    button: { link: data.callToAction.link, theme: 'brand' },
+    button: { link: data.booking.cta, theme: 'brand', size: 'cta' },
   });
   if (ctaButtonEl) ctaBlock.appendChild(ctaButtonEl);
 
@@ -230,8 +253,8 @@ function buildForm(data, instances) {
   const formBlock = document.createElement('div');
 
   const formHeading = document.createElement('h3');
-  formHeading.className = 'mb-32 text-h4';
-  formHeading.textContent = data.formHeading;
+  formHeading.className = 'mb-24 text-h4';
+  formHeading.textContent = data.messageForm.heading;
   formBlock.appendChild(formHeading);
 
   const form = document.createElement('form');
@@ -301,6 +324,7 @@ function buildForm(data, instances) {
   const submitButton = AnimatedButton(null, {
     type: 'submit',
     theme: 'brand',
+    size: 'cta',
     className: 'mt-16 w-full',
     children: 'Send Message',
   });
@@ -389,7 +413,7 @@ function buildForm(data, instances) {
 
     try {
       const formData = enhanceFormData(new FormData(form));
-      const response = await fetch(data.submitEndpoint, { method: 'POST', body: formData });
+      const response = await fetch(CONTACT_ENDPOINT, { method: 'POST', body: formData });
       if (response.ok) {
         showSuccessView();
         form.reset();
@@ -429,27 +453,28 @@ function buildForm(data, instances) {
 // contact-page hero section, named distinctly to avoid confusion.
 export function initContactPageSection(mountTarget, props = {}) {
   const data = { ...contactSectionDataDefaults(), ...props };
+
+  // No `name` passed on purpose: initPageBuilderSection falls back to
+  // data-page-builder-section="true" when name is omitted, which matches
+  // this section (it's the only one on the contact page, unlike ctaSection.js
+  // which passes name: 'ctaSection' since it's reused across pages).
+  const section = initPageBuilderSection({
+    theme: data.theme || 'light',
+    padding: 'pt-0 pb-0',
+    gridClassName: '!gap-y-64 items-center lg:min-h-750',
+    mainContainer: mountTarget,
+  });
+
+  section.gridContainerEl.className = cx(
+    section.gridContainerEl.className,
+    'flex items-center py-header lg:min-h-svh'
+  );
+
   const instances = [];
 
-  const section = document.createElement('section');
-  section.setAttribute('data-page-builder-section', 'true');
-  section.setAttribute('data-theme', data.theme || 'light');
-  section.className = 'pt-0 pb-0 bg-background';
-
-  const gridContainer = document.createElement('div');
-  gridContainer.className = 'grid-container flex items-center py-header lg:min-h-svh';
-
-  const gridLayout = document.createElement('div');
-  gridLayout.className = '!gap-y-64 items-center lg:min-h-750 grid-layout';
-
-  gridLayout.appendChild(buildVisual(data.visual, instances));
-  gridLayout.appendChild(buildInfoColumn(data, instances));
-  gridLayout.appendChild(buildForm(data, instances));
-
-  gridContainer.appendChild(gridLayout);
-  section.appendChild(gridContainer);
-
-  if (mountTarget) mountTarget.appendChild(section);
+  section.gridLayoutEl.appendChild(buildVisual(data.image, instances));
+  section.gridLayoutEl.appendChild(buildInfoColumn(data, instances));
+  section.gridLayoutEl.appendChild(buildForm(data, instances));
 
   function mount() {
     instances.forEach((instance) => instance?.mount?.());
@@ -457,10 +482,10 @@ export function initContactPageSection(mountTarget, props = {}) {
 
   function destroy() {
     instances.forEach((instance) => instance?.destroy?.());
-    if (section.parentNode) section.parentNode.removeChild(section);
+    section.destroy();
   }
 
-  return { element: section, mount, destroy };
+  return { element: section.element, mount, destroy };
 }
 
 function contactSectionDataDefaults() {

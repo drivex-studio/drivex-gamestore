@@ -94,7 +94,7 @@ export class ScrambleGroup {
       this.hasTriggered = true;
     };
 
-    // 5. (converted from React hook: useIdleGSAP) -- ScrollTrigger setup, deferred to idle time
+    // 5. (converted from React hook: subscribeIdleGSAP) -- ScrollTrigger setup, deferred to idle time
     // to mirror the original hook's "idle" naming. The wrapper hook's own implementation
     // (Module ID 228744) wasn't part of this batch, so only the callback it invoked at the
     // call site is reconstructed here; the idle-defer wrapper itself is inferred from the name.

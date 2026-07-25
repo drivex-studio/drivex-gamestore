@@ -2,9 +2,13 @@
 export const contactSectionData = {
   title: "Let's talk",
   image: {
-    _id: "image-9f3495156a42fdfde221fefaeae4e25b4f921127-1600x2400-heif",
-    _rev: "YTJXK0pSg0Faj6IAyiGjHy",
-    altText: "Adrian and Julian dressed in black standing against a white wall, looking off to the side in a minimalist studio",
+    _type: "image",
+    asset: {
+      _type: "reference",
+      _ref: "image-9004dd267bd2ab10b7edb1584fb70fb9e2049989-1200x675-jpg",
+    },
+    _rev: "PGI1Mc19xNWwE3RgMrd8sf",
+    altText: "Game items",
     crop: {
       _type: "sanity.imageCrop",
       bottom: 0.03885178802240414,
@@ -12,12 +16,12 @@ export const contactSectionData = {
       right: 0.11085417586538102,
       top: 0.23669754416199912,
     },
-    description: "A minimalist portrait of Adrian and Julian standing side by side against a white wall, dressed in dark clothing and styled with a clean, contemporary aesthetic.",
+    description: "Game Event poster.",
     dimensions: {
-      _type: "sanity.imageDimensions",
-      aspectRatio: 0.6666666666666666,
-      height: 2400,
-      width: 1600,
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7777777777777777,
+        "height": 675,
+        "width": 1200,
     },
     hotspot: {
       _type: "sanity.imageHotspot",
@@ -26,7 +30,7 @@ export const contactSectionData = {
       x: 0.4931089774075815,
       y: 0.5989228780697975,
     },
-    lqip: "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAeABQDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAYDBAcF/8QAJRAAAQMDAwQDAQAAAAAAAAAAAgABAwQGEQUSIQcTMUEUIiNR/8QAFQEBAQAAAAAAAAAAAAAAAAAAAwL/xAAYEQEBAAMAAAAAAAAAAAAAAAAAIRESMf/aAAwDAQACEQMRAD8A1COkH+KWamFon49JU6mXcNo6XDUkxvvlYfo3OFwbb6p0mu3ENAwTBHUB+TELYZ8c5Rxd6YJQbunx7Qop5maY+faFCyt1+D5Ftiwk3caUdgv7fPpZ3plJLot66HWyAMUcgsJPjDMWPC2m7Lcp9fCJqkyF4i3C7Jeuey4NUiphaoOPtGxZx5Taiysy1u6Qiz5fKFXehGLEe4n2tjLv5QhpX//Z",
+    lqip: "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAMHBQb/xAAiEAACAgICAgIDAAAAAAAAAAABAgMEACEFEQYSExRRYYH/xAAXAQADAQAAAAAAAAAAAAAAAAABAgMF/8QAHREAAgICAwEAAAAAAAAAAAAAAQIAEQMhEjGR0f/aAAwDAQACEQMRAD8AVwVniFRaN2sk6Mvskibb+nNC3S4b7hArD41j9ih0V/feTXx+aSOWjKjkSaHedN5JyFqThJg0xPsyqdDY/GaZyZSyKGrlUsiJy6jLFTiJmDyPBASNJ13rDJVy9uxXvyRwzOiDrQOGKchU0d+/YWWzrXk//9k=",
     title: "Minimalist portrait of Adrian and Julian standing against a white wall",
   },
   contact: {
@@ -132,4 +136,11 @@ export const contactSectionData = {
   messageForm: {
     heading: "Send a message",
   },
+  inquiryOptions: [
+    { value: "", label: "Inquiry type *" },
+    { value: "order-support", label: "Order support" },
+    { value: "bulk-purchase", label: "Bulk purchase" },
+    { value: "partnership", label: "Partnership" },
+    { value: "other", label: "Other" },
+  ],
 };

@@ -1,6 +1,6 @@
 
 import { gsap, ScrollTrigger } from '../../vendor.js';
-import { useIdleGSAP, cx } from '../shared.js'; 
+import { subscribeIdleGSAP, cx } from '../shared.js'; 
 
 const HEADLINE_STYLE_MAP = {
   display: 'text-display',
@@ -146,7 +146,7 @@ export function initAnimatedHeadline({
       });
     }
 
-    useIdleGSAP(() => {
+    subscribeIdleGSAP(() => {
       if (trigger !== 'scroll' || prefersReducedMotion) return;
       const scrollTarget = wrapperEl || headlineEl;
       if (scrollTarget) {

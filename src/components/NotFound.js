@@ -1,5 +1,5 @@
 import { cx } from '../utils/cx.js'; // NOTE: org Module ID: 801335
-// (converted from React hook: useIdleGSAP)
+// (converted from React hook: subscribeIdleGSAP)
 import { watchIdleGSAP } from '../utils/idleGSAP.js'; // NOTE: org Module ID: 228744
 // (converted from React hook: usePageEnter)
 import { watchPageEnter } from '../utils/pageEnter.js'; // NOTE: org Module ID: 986950

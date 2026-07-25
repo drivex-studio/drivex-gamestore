@@ -1,6 +1,6 @@
 
 import { gsap, ScrollTrigger } from '../../vendor.js';
-import { useIdleGSAP } from '../../hooks/useIdleGSAP.js'; 
+import { subscribeIdleGSAP } from '../../context/PageTransitionProvider.js'; 
 import { easings } from '../../utils/easings.js'; 
 import { initRollerNumber } from '../../utils/FlipIndicator.js'; 
 import { initScrambleText } from '../../utils/ScrambleText.js';  
@@ -184,7 +184,7 @@ const media = initSanityMedia(cardEl, {
   window.addEventListener('resize', updateIsMobile);
 
   let scrollTriggerInstance = null;
-  useIdleGSAP(
+  subscribeIdleGSAP(
     () => {
       const revealTargets = cardEls.filter(Boolean);
       if (revealTargets.length !== 0) {

@@ -3,7 +3,7 @@ import { gsap, ScrollTrigger } from '../../vendor.js';
 
 import { getLenis } from '../../lib/lenisState.js';
 import { useDualLayerScramble } from '../../utils/FlipIndicator.js';
-import { useIdleGSAP } from '../../hooks/useIdleGSAP.js';
+import { subscribeIdleGSAP } from '../../context/PageTransitionProvider.js';
 import { cx } from '../../utils/cx.js';
 
 import { initScrollAnimatedHeadline } from '../utilities/ScrollAnimatedHeadline.js';
@@ -124,7 +124,7 @@ export function initScrambleTitle(parentElement, props = {}) {
     });
   }
 
-  useIdleGSAP(setupScrollTrigger, { dependencies: [scramble] });
+  subscribeIdleGSAP(setupScrollTrigger, { dependencies: [scramble] });
 
   function destroy() {
     el.remove();
@@ -434,7 +434,7 @@ if (headline && headline.text) {
       });
     }
   }
-  useIdleGSAP(setupGSAP, { dependencies: [caseStudies?.length] });
+  subscribeIdleGSAP(setupGSAP, { dependencies: [caseStudies?.length] });
 
   updateActiveState(0, 0);
 
