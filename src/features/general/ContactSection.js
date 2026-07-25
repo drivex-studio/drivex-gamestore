@@ -1,7 +1,7 @@
 // src/features/general/ContactSection.js
 
 import { gsap, ScrollTrigger } from '../../vendor.js';
-import { initAnimatedHeadline } from '../utilities/AnimatedHeadline.js';
+import { initAnimatedHeadline, initSanityImage, SanityLink } from '../shared.js';
 import { initAnimatedButton as AnimatedButton } from '../../components/ui/AnimatedButton.js';
 import { initInput } from '../../components/ui/Input.js';
 import { initFormHoneypot as FormHoneypot } from '../../components/ui/FormHoneypot.js';
@@ -13,24 +13,19 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const FIELD_CLASS =
   'w-full border-0 border-b border-foreground/20 bg-transparent px-0 py-12 text-body text-foreground placeholder:text-foreground/40 focus:border-foreground focus:outline-none transition-colors';
 
-function buildVisual({ src, alt }) {
+function buildVisual({ image }, instances) {
   const wrap = document.createElement('div');
   wrap.className = 'grid-span-12 lg:grid-span-4 order-3 h-full lg:order-none';
 
   const inner = document.createElement('div');
   inner.className = 'size-full overflow-hidden bg-background-muted min-h-[320px] lg:min-h-0';
 
-  const img = document.createElement('img');
-  img.loading = 'lazy';
-  img.decoding = 'async';
-  img.alt = alt || '';
-  img.className = 'h-full w-full object-cover';
-  img.src = src;
-  img.addEventListener('error', () => {
-    img.remove();
-  });
+  const imageInstance = initSanityImage({ image, className: 'size-full object-cover' });
+  if (imageInstance) {
+    inner.appendChild(imageInstance.el);
+    instances.push(imageInstance);
+  }
 
-  inner.appendChild(img);
   wrap.appendChild(inner);
   return wrap;
 }
@@ -224,18 +219,17 @@ function buildForm(data, instances) {
   ctaHeading.textContent = data.callToAction.heading;
   ctaBlock.appendChild(ctaHeading);
 
-  const ctaButton = AnimatedButton(null, {
-    type: 'button',
-    theme: 'brand',
-    children: data.callToAction.buttonText,
+  const ctaButtonEl = initSanityButton({
+    button: { link: data.callToAction.link, theme: 'brand' },
   });
-  ctaButton.el.addEventListener('click', () => {
-    window.location.href = data.callToAction.href;
-  });
-  ctaBlock.appendChild(ctaButton.el);
-  instances.push(ctaButton);
+  if (ctaButtonEl) ctaBlock.appendChild(ctaButtonEl);
 
+  col.appendChild(ctaBlock);
 
+  // Form block
+  const formBlock = document.createElement('div');
+
+  const formHeading = document.createElement('h3');
   formHeading.className = 'mb-32 text-h4';
   formHeading.textContent = data.formHeading;
   formBlock.appendChild(formHeading);
@@ -448,7 +442,7 @@ export function initContactPageSection(mountTarget, props = {}) {
   const gridLayout = document.createElement('div');
   gridLayout.className = '!gap-y-64 items-center lg:min-h-750 grid-layout';
 
-  gridLayout.appendChild(buildVisual(data.visual));
+  gridLayout.appendChild(buildVisual(data.visual, instances));
   gridLayout.appendChild(buildInfoColumn(data, instances));
   gridLayout.appendChild(buildForm(data, instances));
 

@@ -67,6 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
   mainContainer.className = 'relative z-[1]';
   pageContent.appendChild(mainContainer);
 
+  contactSectionInstance = initContactPageSection(mainContainer, contactSectionData);
+
 
   footerInstance = initFooterClient(pageContent, footerProps);
 
@@ -83,12 +85,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof destroyPageEnterProvider === 'function') destroyPageEnterProvider();
     if (typeof destroyThemeSync === 'function') destroyThemeSync();
 
-if (preloaderProviderInstance && typeof preloaderProviderInstance.destroy === 'function') {
-  preloaderProviderInstance.destroy();
-}
-if (preloaderScrollLockInstance && typeof preloaderScrollLockInstance === 'function') {
-  preloaderScrollLockInstance();
-}
+  if (preloaderProviderInstance && typeof preloaderProviderInstance.destroy === 'function') {
+    preloaderProviderInstance.destroy();
+  }
+  if (preloaderScrollLockInstance && typeof preloaderScrollLockInstance === 'function') {
+    preloaderScrollLockInstance();
+  }
 
     if (preloaderInstance && typeof preloaderInstance.destroy === 'function') {
       preloaderInstance.destroy();

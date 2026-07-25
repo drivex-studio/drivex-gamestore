@@ -1,6 +1,6 @@
+import { SanityLink, initAnimatedButton } from '../shared.js';
 
-
-import { SanityLink, AnimatedLink, initAnimatedButton } from '../shared.js';
+import { AnimatedLink } from '../animations/AnimatedLink.js';
 
 export function initSanityButton({ button = {}, className } = {}) {
   if (!button.link?.href) return null;
@@ -10,9 +10,7 @@ export function initSanityButton({ button = {}, className } = {}) {
   if (button.variant === 'link') {
     const isExternal = button.link.type === 'external';
     return AnimatedLink({
-      href: button.link.href,
-      target: isExternal ? '_blank' : undefined,
-      rel: isExternal ? 'noopener noreferrer' : undefined,
+      asChild: true,
       indicator: isExternal,
       className,
       children: linkContent,
@@ -22,6 +20,7 @@ export function initSanityButton({ button = {}, className } = {}) {
   const { el } = initAnimatedButton(null, {
     size: button.size,
     theme: button.theme,
+    asChild: true,
     className,
     children: linkContent,
   });

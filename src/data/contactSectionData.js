@@ -1,44 +1,135 @@
 // src/data/contactSectionData.js
-
 export const contactSectionData = {
-  theme: 'dark',
-
-  visual: {
-    // Swap with a real asset when available (e.g. via Working Copy -> src/assets/images/)
-    src: '../src/assets/images/contact-visual.jpg',
-    alt: 'Drive X Store',
+  title: "Let's talk",
+  image: {
+    _id: "image-9f3495156a42fdfde221fefaeae4e25b4f921127-1600x2400-heif",
+    _rev: "YTJXK0pSg0Faj6IAyiGjHy",
+    altText: "Adrian and Julian dressed in black standing against a white wall, looking off to the side in a minimalist studio",
+    crop: {
+      _type: "sanity.imageCrop",
+      bottom: 0.03885178802240414,
+      left: 0.09707213068054396,
+      right: 0.11085417586538102,
+      top: 0.23669754416199912,
+    },
+    description: "A minimalist portrait of Adrian and Julian standing side by side against a white wall, dressed in dark clothing and styled with a clean, contemporary aesthetic.",
+    dimensions: {
+      _type: "sanity.imageDimensions",
+      aspectRatio: 0.6666666666666666,
+      height: 2400,
+      width: 1600,
+    },
+    hotspot: {
+      _type: "sanity.imageHotspot",
+      height: 0.7244506678155966,
+      width: 0.792073693454075,
+      x: 0.4931089774075815,
+      y: 0.5989228780697975,
+    },
+    lqip: "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAeABQDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAYDBAcF/8QAJRAAAQMDAwQDAQAAAAAAAAAAAgABAwQGEQUSIQcTMUEUIiNR/8QAFQEBAQAAAAAAAAAAAAAAAAAAAwL/xAAYEQEBAAMAAAAAAAAAAAAAAAAAIRESMf/aAAwDAQACEQMRAD8A1COkH+KWamFon49JU6mXcNo6XDUkxvvlYfo3OFwbb6p0mu3ENAwTBHUB+TELYZ8c5Rxd6YJQbunx7Qop5maY+faFCyt1+D5Ftiwk3caUdgv7fPpZ3plJLot66HWyAMUcgsJPjDMWPC2m7Lcp9fCJqkyF4i3C7Jeuey4NUiphaoOPtGxZx5Taiysy1u6Qiz5fKFXehGLEe4n2tjLv5QhpX//Z",
+    title: "Minimalist portrait of Adrian and Julian standing against a white wall",
   },
-
-  headline: "Let's talk",
-
-  contactLines: [
-    { label: 'Email', href: 'mailto:hello@drivex.com', text: 'hello@drivex.com' },
-    { label: 'Support', href: 'mailto:support@drivex.com', text: 'support@drivex.com' },
-  ],
-
-  socials: [
-    { text: 'Instagram', href: 'https://instagram.com/drivex' },
-    { text: 'Discord', href: 'https://discord.gg/drivex' },
-    { text: 'X / Twitter', href: 'https://twitter.com/drivex' },
-  ],
-
-  availabilityNote: 'Working Globally -- 24/7 Delivery',
-
-  callToAction: {
-    heading: 'Need a fast answer? Book a 15-minute call.',
-    buttonText: 'Book a call',
-    href: '#',
+  contact: {
+    email: {
+      label: "Email",
+      link: {
+        _key: "aec7342af8ef",
+        _type: "linkField",
+        canDownload: false,
+        email: "contact@good-fella.com",
+        href: "mailto:contact@good-fella.com",
+        modalId: null,
+        openInNewTab: false,
+        text: "contact@good-fella.com",
+        type: "email",
+      },
+    },
+    Julian: {
+      label: "Julian",
+      link: {
+        _key: "ad4e1233b5e1",
+        _type: "linkField",
+        canDownload: false,
+        email: "Julian@good-fella.com",
+        href: "mailto:Julian@good-fella.com",
+        modalId: null,
+        openInNewTab: false,
+        text: "Julian@good-fella.com",
+        type: "email",
+      },
+    },
+    Adrian: {
+      label: "Adrian",
+      link: {
+        _key: "3f4a2140f0a5",
+        _type: "linkField",
+        canDownload: false,
+        email: "Adrian@good-fella.com",
+        href: "mailto:Adrian@good-fella.com",
+        modalId: null,
+        openInNewTab: false,
+        text: "Adrian@good-fella.com",
+        type: "email",
+      },
+    },
+    note: "Working Globally",
   },
-
-  formHeading: 'Send a message',
-
-  inquiryOptions: [
-    { value: '', label: 'What do you need? *' },
-    { value: 'buy-account', label: 'Buy a Game Account' },
-    { value: 'topup', label: 'In-Game Currency / Top-up' },
-    { value: 'custom-order', label: 'Custom / Bulk Order' },
-    { value: 'support', label: 'Support Issue' },
+  socialLinks: [
+    {
+      label: "Instagram",
+      link: {
+        _key: "9329db495279",
+        _type: "linkField",
+        canDownload: false,
+        external: "https://www.instagram.com/good_fella_studio/",
+        href: "https://www.instagram.com/good_fella_studio/",
+        modalId: null,
+        openInNewTab: true,
+        text: "https://www.instagram.com/good_fella_studio/",
+        type: "external",
+      },
+    },
+    {
+      label: "Linkedin",
+      link: {
+        _key: "6cc5ff407808",
+        _type: "linkField",
+        canDownload: false,
+        external: "https://www.linkedin.com/in/julianfella/",
+        href: "https://www.linkedin.com/in/julianfella/",
+        modalId: null,
+        openInNewTab: true,
+        text: "https://www.linkedin.com/in/julianfella/",
+        type: "external",
+      },
+    },
+    {
+      label: "Github",
+      link: {
+        _key: "0e1561366482",
+        _type: "linkField",
+        canDownload: false,
+        external: "https://github.com/GoodFellaStudio",
+        href: "https://github.com/GoodFellaStudio",
+        modalId: null,
+        openInNewTab: true,
+        text: "https://github.com/GoodFellaStudio",
+        type: "external",
+      },
+    },
   ],
-
-  submitEndpoint: '/api/contact',
+  booking: {
+    heading: "Book a 15-minute intro call. Pick a time that works.",
+    cta: {
+      canDownload: false,
+      href: "#",
+      modalId: "cal-booking",
+      openInNewTab: true,
+      text: "Book a call",
+      type: "modal",
+    },
+  },
+  messageForm: {
+    heading: "Send a message",
+  },
 };
