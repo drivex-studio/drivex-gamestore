@@ -166,6 +166,7 @@ if (preloaderScrollLockInstance && typeof preloaderScrollLockInstance === 'funct
     }
 
     if (heroPushInstance && typeof heroPushInstance.destroy === 'function') heroPushInstance.destroy();
+    
     if (heroContentInstance && typeof heroContentInstance.destroy === 'function') heroContentInstance.destroy();
 
     if (cardsSectionInstance && typeof cardsSectionInstance.destroy === 'function') {

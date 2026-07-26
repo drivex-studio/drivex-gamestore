@@ -38,10 +38,7 @@ export function initHeaderClient(parentElement, props = {}) {
   const { openModal } = useModal(); 
   const { prefersReducedMotion } = usePageEnterContext(); 
 
-  // NOTE: destructure မလုပ်တော့ပါ -- Header ကို PreloaderProvider mount ဖြစ်ခင်ကတည်းက
-  // init ခေါ်တတ်တဲ့ order issue ရှိတာမို့ destructure လုပ်ရင် stale snapshot (isInitialLoad: false)
-  // ကို အမြဲရနေမှာဖြစ်လို့ live object အနေနဲ့ ကိုင်ထားပါတယ်။ Provider mount ပြီးတဲ့အခါ
-  // notifyPreloaderSubscribers() က ဒီ object ရဲ့ getter value ကို update လုပ်ပေးပါလိမ့်မယ်.
+
   const preloader = subscribePreloader();
 
   const isLg = useBreakpoint('lg'); 

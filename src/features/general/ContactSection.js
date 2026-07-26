@@ -1,7 +1,9 @@
 // src/features/general/ContactSection.js
 
-import { gsap, ScrollTrigger } from '../../vendor.js';
+import { gsap } from '../../vendor.js';
 import { initAnimatedHeadline, initSanityImage, SanityLink } from '../shared.js';
+import { usePageEnter } from '../../hooks/usePageEnter.js';
+import { usePageEnterContext } from '../../hooks/usePageEnterContext.js';
 import { initAnimatedButton as AnimatedButton } from '../../components/ui/AnimatedButton.js';
 import { initInput } from '../../components/ui/Input.js';
 import { initFormHoneypot as FormHoneypot } from '../../components/ui/FormHoneypot.js';
@@ -24,7 +26,7 @@ function buildVisual(image, instances) {
   const inner = document.createElement('div');
   inner.className = 'size-full overflow-hidden bg-background-muted min-h-[320px] lg:min-h-0';
 
-  const imageInstance = initSanityImage({ image, className: 'size-full object-cover' });
+  const imageInstance = initSanityImage(null, { image, className: 'size-full object-cover' });
   if (imageInstance) {
     inner.appendChild(imageInstance.el);
     instances.push(imageInstance);
@@ -77,10 +79,13 @@ function buildInfoColumn(data, instances) {
   const col = document.createElement('div');
   col.className = 'grid-span-12 lg:grid-span-2 lg:grid-start-6 flex h-full flex-col justify-between';
 
+  const { prefersReducedMotion } = usePageEnterContext();
+
   const headingWrap = document.createElement('div');
   const headline = initAnimatedHeadline({
     children: data.title,
     as: 'h2',
+    skip: prefersReducedMotion,
   });
   headingWrap.appendChild(headline.element);
   instances.push(headline);
@@ -117,27 +122,31 @@ function buildInfoColumn(data, instances) {
   proseHost.appendChild(contentWrap);
   col.appendChild(proseHost);
 
-  // Deferred scroll-triggered reveal (mirrors AnimatedHeadline's mount-time
-  // ScrollTrigger setup) -- keeps real <a> links intact instead of
+  // Reveal is gated behind usePageEnter, exactly like HeroSectionContent's
+  // revealSequence -- NOT fired straight from local mount(). Contact is a
+  // single, always-in-view section like Hero (no scroll-into-view moment to
+  // hook a ScrollTrigger onto), so it should share Hero's page-enter timing
+  // rather than a scroll trigger. Keeps real <a> links intact instead of
   // flattening them the way AnimatedProse's text-splitter would.
-  let scrollTriggerInstance = null;
-  function mount() {
-    headline.mount();
+  if (lineEls.length > 0 && !prefersReducedMotion) {
+    gsap.set(lineEls, { opacity: 0, y: 12 });
+  }
+
+  let hasRevealed = false;
+  function revealSequence() {
+    if (hasRevealed) return;
+    hasRevealed = true;
     headline.reveal();
     if (lineEls.length === 0) return;
-    gsap.set(lineEls, { opacity: 0, y: 12 });
-    scrollTriggerInstance = ScrollTrigger.create({
-      trigger: proseHost,
-      start: 'top bottom',
-      once: true,
-      onEnter: () => {
-        gsap.to(lineEls, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', stagger: 0.08 });
-      },
-    });
+    gsap.to(lineEls, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', stagger: 0.08, delay: 0.15 });
   }
-  function destroy() {
-    scrollTriggerInstance?.kill();
+
+  usePageEnter(revealSequence, { priority: 1, skip: prefersReducedMotion });
+
+  function mount() {
+    headline.mount();
   }
+  function destroy() {}
   instances.push({ mount, destroy });
 
   return col;

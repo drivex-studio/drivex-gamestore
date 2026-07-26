@@ -1,5 +1,3 @@
-// src/data/navData.js
-
 export const navItems = [
   { text: 'Home', link: { href: 'index.html' } },
   { text: 'Work', link: { href: 'work.html' } },

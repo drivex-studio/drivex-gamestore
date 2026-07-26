@@ -31,6 +31,7 @@ let contactSectionInstance = null;
 let customCursorInstance = null;
 let footerInstance = null;   
 
+
 document.addEventListener('DOMContentLoaded', () => {
   
   destroyLenisProvider = initLenisProvider({});
@@ -66,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const mainContainer = document.createElement('main');
   mainContainer.className = 'relative z-[1]';
   pageContent.appendChild(mainContainer);
+  
 
   contactSectionInstance = initContactPageSection(mainContainer, contactSectionData);
 
