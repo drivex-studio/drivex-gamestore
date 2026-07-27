@@ -1,22 +1,13 @@
 import { initPageTransitionState } from './lib/pageTransitionState.js';
 import { initLenisProvider, getLenis, scrollToTop } from './lib/lenisState.js';
-
 import { PreloaderProvider } from './context/PreloaderProvider.js';
-
 import { Preloader } from './features/animations/Preloader.js';
-
 import { PreloaderScrollLock } from './context/PreloaderScrollLock.js';
-
 import { initSyncBodyTheme } from './components/SyncBodyTheme.js'; 
-
 import { initPageEnterProvider } from './components/PageEnterProvider.js';
-
 import { initHeaderClient } from './components/HeaderClient.js';
-
 import { navItems, flyout, headerCta, spotsRemaining } from './data/navData.js';
-
 import { initFooterClient } from './components/FooterClient.js';
-
 import { footerProps } from './data/footerData.js';
 
 

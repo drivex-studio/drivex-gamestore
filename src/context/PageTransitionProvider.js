@@ -136,7 +136,6 @@ export class PageTransitionProvider {
 
 
 // ---- PageTransitionRectangles ----
-// NOTE: org Module ID: 788264
 export class PageTransitionRectangles {
   constructor(parentElement, props = {}) {
     this.el = document.createElement('div');
@@ -289,7 +288,6 @@ export class PageTransitionOverlay {
 
 
 // ---- subscribePageTransition ----
-// NOTE: org Module ID: 57054
 export function subscribePageTransition() {
   return {
     startTransition: pageTransitionContext.startTransition,
